@@ -1,0 +1,23 @@
+{
+    "name": "Face Detector Devel Env",
+    "build": {
+        "dockerfile": "../docker/Dockerfile",
+        "context": ".."
+    },
+    "runArgs": [
+        "--gpus=all",
+        "--ipc=host"
+    ],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "charliermarsh.ruff"
+            ]
+        }
+    },
+    "containerEnv": {
+        "WANDB_API_KEY": "${localEnv:WANDB_API_KEY}"
+    }
+}

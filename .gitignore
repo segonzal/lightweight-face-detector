@@ -1,0 +1,27 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments & Virtual Envs
+.venv/
+venv/
+env/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+
+# Datasets and Weights (¡Crucial para CV!)
+data/
+*.pth
+*.pt
+*.onnx
+*.engine
+outputs/
+runs/
+
+# Docker logs
+*.log
+docker/.dockerignore
