@@ -42,6 +42,14 @@ class WiderFaceRetinaDataset(Dataset):
                     samples[-1].kps.append(np.array(line[4:19], dtype=np.float32).reshape(5, 3))
         
         return samples
+    
+    def _standardize_to_albumentations(self, bboxes, kps):
+        bboxes_alb = bboxes.tolist()
+        
+        coords = kps[:, :, :2].reshape(-1, 2).tolist()
+        visibility = kps[:, :, 2]
+        
+        return bboxes_alb, coords, visibility
 
     def __len__(self):
         return len(self.samples)
@@ -55,8 +63,14 @@ class WiderFaceRetinaDataset(Dataset):
         bboxes = np.stack(sample.bbox)
         kps = np.stack(sample.kps)
 
+        bboxes_alb, kps_coords, visibility = self._standardize_to_albumentations(bboxes, kps)
+
         if self.transform:
-            image, bboxes, kps = self.transform(image, bboxes, kps)
+            transformed = self.transform(image=image, bboxes=bboxes_alb, keypoints=kps_coords)
+
+            image = transformed['image']
+            bboxes = transformed['bboxes']
+            kps = transformed['keypoints']
     
         return image, {"bbox": bboxes, "kps": kps}
 
