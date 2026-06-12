@@ -19,5 +19,8 @@
     },
     "containerEnv": {
         "WANDB_API_KEY": "${localEnv:WANDB_API_KEY}"
-    }
+    },
+     "mounts": [
+        "source=${env:HOME}/.gitconfig,target=/root/.gitconfig,type=bind,consistency=cached"
+    ]
 }
