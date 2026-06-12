@@ -1,4 +1,33 @@
+train:
+  device: cuda
+  run_name: default
+  epochs: 100
+  lr: 0.001
+  log_dir: logs
+  ckpt_dir: checkpoints
+  val_every_epochs: 1
+  log_every_steps: 50
+model:
+  pretrained: True
+loss:
+  w_cls: 1.0
+  w_box: 1.0
+  w_kps: 0.5
 loader:
-  dataset: "wider_face"
+  dataset: wider_face
   batch_size: 32
   num_workers: 4
+transforms:
+  train:
+    - name: horizontal_flip
+      p: 0.5
+    - name: color_jitter
+      p: 0.3
+      brightness: 0.2
+    - name: resize
+      height: 640
+      width: 640
+  val:
+    - name: resize
+      height: 640
+      width: 640
